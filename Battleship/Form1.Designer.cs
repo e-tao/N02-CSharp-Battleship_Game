@@ -207,7 +207,7 @@ namespace Battleship
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Ink Free", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
-            this.label4.Location = new System.Drawing.Point(749, 168);
+            this.label4.Location = new System.Drawing.Point(743, 163);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(96, 39);
             this.label4.TabIndex = 15;

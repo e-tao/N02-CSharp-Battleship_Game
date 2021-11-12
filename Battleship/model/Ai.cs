@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Drawing;
+using System.Linq;
 
 namespace Battleship.model
 {
@@ -14,6 +15,9 @@ namespace Battleship.model
         private static Random rand = new();
         private static int randStartRow;
         private static int randStartCol;
+
+        private static List<int[]> TriedTiles = new();
+        private static int[] newLocation;
 
         public Dictionary<string, List<ShipTile>> GameStart()
         {
@@ -49,7 +53,16 @@ namespace Battleship.model
 
         public static void AiFireBack(GameGrid GrdPlayer, Dictionary<string, List<ShipTile>> AllPlayerShips)
         {
-            RandomLocation();
+
+
+            while (RepeatedLocation())
+            {
+                RepeatedLocation();
+            }
+
+            TriedTiles.Add(newLocation);
+            
+
             GridTile aShipTile = GrdPlayer.Tiles[randStartCol, randStartRow];
             ShipTile firedAt = new()
             {
@@ -76,10 +89,19 @@ namespace Battleship.model
             }
         }
 
-        private static void RandomLocation()
+        private static bool RepeatedLocation()
         {
             randStartRow = rand.Next(0, GameVariables.boundry);
             randStartCol = rand.Next(0, GameVariables.boundry);
+            newLocation = new int[] { randStartRow, randStartCol };
+            if (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
         }
     }
 }

@@ -20,6 +20,8 @@ namespace Battleship
 
         List<ShipTile> tempShip;
 
+        private int shipAdded = 0;
+
         public Form1()
         {
             tempShip = new();
@@ -35,6 +37,9 @@ namespace Battleship
             userShipSunk = 0;
             AllAiShips = ai.GameStart();
             AllPlayerShips = player.GameStart();
+
+            EnableLeftGrid();
+            
 
             if (AllAiShips == null || AllPlayerShips == null)
             {
@@ -57,6 +62,7 @@ namespace Battleship
 
         private void GrdFire_FireClick(FireEventArgs fireEventArgs)
         {
+            
             Player.playerStepCounter++; 
             LblStepsPlayer.Text = Player.playerStepCounter.ToString();
             HitCheck(fireEventArgs);
@@ -131,10 +137,12 @@ namespace Battleship
             if (aiShipSunk == GameVariables.numberOfShips)
             {
                 LblResultPlayer.Text = "Winner";
+                DisableLeftGrid();
             }
             else if (userShipSunk == GameVariables.numberOfShips)
             {
                 LblResultAi.Text = "Winner";
+                DisableLeftGrid();
             }
             else
             {
@@ -146,10 +154,16 @@ namespace Battleship
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            if (!Ship.ShipLengthCheck(tempShip))
+            
+
+            if (!Ship.ShipLengthCheck(tempShip) )
             {
                 Player.AddShip(tempShip);
+                shipAdded++;
                 tempShip.Clear();
+            }
+            if (shipAdded == GameVariables.numberOfShips ) {
+                DisableRightGrid();
             }
         }
 
@@ -157,6 +171,9 @@ namespace Battleship
         {
             GrdPlayer.InitGrid();
             Player.ResetShip();
+            GrdFire.InitGrid();
+            DisableLeftGrid();
+            EnableRightGrid();
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -165,14 +182,17 @@ namespace Battleship
             LblStepsAi.Text = "0";
             LblAiShipLeft.Text = GameVariables.numberOfShips.ToString();
             LblPlayerShipLeft.Text = GameVariables.numberOfShips.ToString();
+            DisableLeftGrid();
+
         }
 
-    
+
 
         private void GrdPlayer_GridClick(FireEventArgs fireEventArgs)
         {
             int r = fireEventArgs.MissileButton.RowCoord;
             int c = fireEventArgs.MissileButton.ColCoord;
+            fireEventArgs.MissileButton.Enabled = false;
             GridTile aShipTile = GrdPlayer.Tiles[c, r];
             aShipTile.BackColor = aShipTile.BackColor == Color.FromArgb(65, 102, 245) ? aShipTile.BackColor = Color.Black : aShipTile.BackColor = Color.FromArgb(65, 102, 245);
 
@@ -197,6 +217,30 @@ namespace Battleship
             }
             tempShip.Clear();
         }
+
+        private void DisableRightGrid()
+        {
+            this.GrdPlayer.GridClick -= new Battleship.model.GameGrid.GridPosition(this.GrdPlayer_GridClick);
+        }
+        private void EnableRightGrid()
+        {
+            this.GrdPlayer.GridClick += new Battleship.model.GameGrid.GridPosition(this.GrdPlayer_GridClick);
+        }
+
+
+        private void DisableLeftGrid()
+        {
+            this.GrdFire.GridClick -= new Battleship.model.GameGrid.GridPosition(this.GrdFire_FireClick);
+        }
+
+        private void EnableLeftGrid()
+        {
+            this.GrdFire.GridClick += new Battleship.model.GameGrid.GridPosition(this.GrdFire_FireClick);
+        }
+
+
+
+
     }
 
     public class GameVariables
@@ -216,4 +260,6 @@ namespace Battleship
                 return configs;
         }
     }
+
+ 
 }
