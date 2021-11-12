@@ -276,6 +276,8 @@ namespace Battleship
             this.Controls.Add(this.GrdFire);
             this.Controls.Add(this.GrdPlayer);
             this.Controls.Add(this.BtnStart);
+            this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "-=Battleship=-";
             this.Load += new System.EventHandler(this.Form1_Load);
