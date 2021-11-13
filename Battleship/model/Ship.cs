@@ -22,7 +22,7 @@ namespace Battleship.model
 
         public static List<ShipTile> MakeAShip()
         {
-            string[] direction = { "up", "down", "left", "right" };
+            string[] direction = { "up", "down", "left", "right" };                 //only two directions are really needed, but for the sake of the completeness, 4 are used.
             string whichDirection = direction[rand.Next(0, 4)];
 
             int rDirection = 0;                     // row ^ up, rDirection --,         row v down rDirection ++
@@ -37,7 +37,7 @@ namespace Battleship.model
                 case "up":
                     while (OutOfBoundry(randStartRow - ShipLength))
                     {
-                        Debug.WriteLine("Opps, Out of Boundry, Regenerate");
+                        //Debug.WriteLine("Opps, Out of Boundry, Regenerate");
                         RandomStart();
                     }
                     for (int i = 0; i < ShipLength; i++)
@@ -49,13 +49,13 @@ namespace Battleship.model
                         }); 
                         rDirection--;
                     }
-                    Output(whichDirection);
+                    //Output(whichDirection);
                     return aShip;
 
                 case "down":
                     while (OutOfBoundry(randStartRow + ShipLength))
                     {
-                        Debug.WriteLine("Opps, Out of Boundry, Regenerate");
+                        //Debug.WriteLine("Opps, Out of Boundry, Regenerate");
                         RandomStart();
                     }
                     for (int i = 0; i < ShipLength; i++)
@@ -68,13 +68,13 @@ namespace Battleship.model
                         });
                         rDirection++;
                     }
-                    Output(whichDirection);
+                    //Output(whichDirection);
                     return aShip;
 
                 case "left":
                     while (OutOfBoundry(randStartCol - ShipLength))
                     {
-                        Debug.WriteLine("Opps, Out of Boundry, Regenerate");
+                        //Debug.WriteLine("Opps, Out of Boundry, Regenerate");
                         RandomStart();
                     }
                     for (int i = 0; i < ShipLength; i++)
@@ -87,13 +87,13 @@ namespace Battleship.model
                         }); 
                         cDirection--;
                     }
-                    Output(whichDirection);
+                    //Output(whichDirection);
                     return aShip;
 
                 case "right":
                     while(OutOfBoundry(randStartCol + ShipLength))
                     {
-                        Debug.WriteLine("Opps, Out of Boundry, Regenerate");
+                        //Debug.WriteLine("Opps, Out of Boundry, Regenerate");
                         RandomStart();
                     }
                     for (int i = 0; i < ShipLength; i++)
@@ -106,7 +106,7 @@ namespace Battleship.model
                         });
                         cDirection++;
                     }
-                    Output(whichDirection);
+                    //Output(whichDirection);
                     return aShip;
                 default: return null;
             }
@@ -156,9 +156,9 @@ namespace Battleship.model
 
 
 
-        private static void Output(string whichDirection)
+/*        private static void Output(string whichDirection)
         {
             Debug.WriteLine($"The ship is generated to the {whichDirection}, has a length of {ShipLength}, with the Start Row of {randStartRow} and Start Col of {randStartCol}");
-        }
+        }*/
     }
 }

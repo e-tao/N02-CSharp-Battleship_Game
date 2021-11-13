@@ -56,8 +56,9 @@ namespace Battleship
             // 
             // BtnStart
             // 
-            this.BtnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(128)))), ((int)(((byte)(128)))));
+            this.BtnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
             this.BtnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
+            this.BtnStart.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.BtnStart.Location = new System.Drawing.Point(12, 702);
             this.BtnStart.Name = "BtnStart";
             this.BtnStart.Size = new System.Drawing.Size(500, 30);
@@ -88,9 +89,9 @@ namespace Battleship
             // BtnAdd
             // 
             this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnAdd.Location = new System.Drawing.Point(541, 709);
+            this.BtnAdd.Location = new System.Drawing.Point(541, 702);
             this.BtnAdd.Name = "BtnAdd";
-            this.BtnAdd.Size = new System.Drawing.Size(75, 23);
+            this.BtnAdd.Size = new System.Drawing.Size(75, 30);
             this.BtnAdd.TabIndex = 4;
             this.BtnAdd.Text = "ADD";
             this.BtnAdd.UseVisualStyleBackColor = true;
@@ -99,9 +100,9 @@ namespace Battleship
             // BtnCancel
             // 
             this.BtnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnCancel.Location = new System.Drawing.Point(753, 709);
+            this.BtnCancel.Location = new System.Drawing.Point(622, 702);
             this.BtnCancel.Name = "BtnCancel";
-            this.BtnCancel.Size = new System.Drawing.Size(75, 23);
+            this.BtnCancel.Size = new System.Drawing.Size(75, 30);
             this.BtnCancel.TabIndex = 4;
             this.BtnCancel.Text = "CANCEL";
             this.BtnCancel.UseVisualStyleBackColor = true;
@@ -110,9 +111,9 @@ namespace Battleship
             // BtnReset
             // 
             this.BtnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
-            this.BtnReset.Location = new System.Drawing.Point(966, 709);
+            this.BtnReset.Location = new System.Drawing.Point(966, 702);
             this.BtnReset.Name = "BtnReset";
-            this.BtnReset.Size = new System.Drawing.Size(75, 23);
+            this.BtnReset.Size = new System.Drawing.Size(75, 30);
             this.BtnReset.TabIndex = 4;
             this.BtnReset.Text = "RESET";
             this.BtnReset.UseVisualStyleBackColor = true;

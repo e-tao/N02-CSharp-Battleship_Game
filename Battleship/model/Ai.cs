@@ -43,7 +43,7 @@ namespace Battleship.model
                 {
                     if (pair.Value.Contains(st))
                     {
-                        Debug.WriteLine("Duplicate Tile Found, Regenerate");
+                        //Debug.WriteLine("Duplicate Tile Found, Regenerate");
                         return true;
                     }
                 }
@@ -79,7 +79,7 @@ namespace Battleship.model
                     {
                         pair.Value.Remove(firedAt);
                         aShipTile.BackColor = Color.Red;
-                        Debug.WriteLine($"Hit @ ({randStartRow}, {randStartCol})");
+                        //Debug.WriteLine($"Hit @ ({randStartRow}, {randStartCol})");
                     }
                     else if (aShipTile.BackColor == Color.FromArgb(65, 102, 245))
                     {

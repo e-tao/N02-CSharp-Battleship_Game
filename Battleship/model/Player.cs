@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace Battleship.model
@@ -18,28 +15,20 @@ namespace Battleship.model
 
         public Dictionary<string, List<ShipTile>> GameStart()
         {
-            if(AllShips.Count < GameVariables.numberOfShips)
-            {
-                MessageBox.Show("Out numbered by your opponent.", "SHIP NUMBER IS NOT ENOUGH!", MessageBoxButtons.OK);
-                return null;
-            }
-            else
-            {
-                return AllShips;
-            }
+            return AllShips;
         }
 
         public static void AddShip(List<ShipTile> tempList)
         {
             List<ShipTile> currentShip = new();
-            foreach(ShipTile st in tempList)
+            foreach (ShipTile st in tempList)
             {
                 currentShip.Add(st);
             }
             int ships = AllShips.Count();
             if (ships < GameVariables.numberOfShips)
             {
-                AllShips.Add("Ship" + (ships+1), currentShip);
+                AllShips.Add("Ship" + (ships + 1), currentShip);
             }
             else
             {
@@ -54,11 +43,5 @@ namespace Battleship.model
                 }
             }
         }
-
-        public static void ResetShip()
-        {
-            AllShips.Clear();
-        }
-
     }
 }

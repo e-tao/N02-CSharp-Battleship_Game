@@ -1,7 +1,6 @@
 ﻿using Battleship.model;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
@@ -35,26 +34,25 @@ namespace Battleship
             userShipSunk = 0;
             AllAiShips = ai.GameStart();
             AllPlayerShips = player.GameStart();
-
             EnableLeftGrid();
 
 
 
- /*           if (AllAiShips == null || AllPlayerShips == null)
-            {
-                Application.Restart();
-            }
+            /*           if (AllAiShips == null || AllPlayerShips == null)
+                       {
+                           Application.Restart();
+                       }
 
 
-            foreach (KeyValuePair<string, List<ShipTile>> pair in AllAiShips)
-            {
-                Debug.WriteLine("Key :" + pair.Key);
+                       foreach (KeyValuePair<string, List<ShipTile>> pair in AllAiShips)
+                       {
+                           Debug.WriteLine("Key :" + pair.Key);
 
-                foreach (ShipTile st in pair.Value)
-                {
-                    Debug.WriteLine($"Coordinates:({ st.RowCoord}, { st.ColCoord})");
-                }
-            }*/
+                           foreach (ShipTile st in pair.Value)
+                           {
+                               Debug.WriteLine($"Coordinates:({ st.RowCoord}, { st.ColCoord})");
+                           }
+                       }*/
 
         }
 
@@ -159,13 +157,13 @@ namespace Battleship
             {
                 MessageBox.Show($"Ship length between {GameVariables.shipMinLength} and {GameVariables.shipMaxLength}. \r\nIt's not Tetris, the ship need to be placed straight.", "ERROR", MessageBoxButtons.OK);
                 BtnCancel_Click(sender, e);
-            
+
             }
             if (shipAdded == GameVariables.numberOfShips)
             {
                 DisableRightGrid();
             }
-            BtnStart.Enabled = shipAdded == 4 ? true : false;
+            BtnStart.Enabled = shipAdded == GameVariables.numberOfShips ? true : false;
 
         }
 
@@ -231,6 +229,7 @@ namespace Battleship
         private void DisableLeftGrid()
         {
             this.GrdFire.GridClick -= new Battleship.model.GameGrid.GridPosition(this.GrdFire_FireClick);
+            BtnStart.Enabled = false;
         }
 
         private void EnableLeftGrid()
@@ -242,9 +241,13 @@ namespace Battleship
 
     public class GameVariables
     {
+
+        private static int shipMinimum = int.Parse(ConfigFromFile()[0]);
+        private static int gridMinimum = int.Parse(ConfigFromFile()[1]);
+
         private static string configFile = "config.txt";
-        public static int numberOfShips = File.Exists(configFile) ? int.Parse(ConfigFromFile()[0]) : 4;
-        public static int boundry = File.Exists(configFile) ? int.Parse(ConfigFromFile()[1]) : 10;
+        public static int numberOfShips = File.Exists(configFile) ? (shipMinimum >= 3 ? shipMinLength : 3) : 4;
+        public static int boundry = File.Exists(configFile) ? (gridMinimum >= 6 ? gridMinimum : 6) : 10;
         public static int shipMinLength = 2;
         public static int shipMaxLength = 4;
 
