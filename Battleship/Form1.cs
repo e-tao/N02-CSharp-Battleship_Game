@@ -16,6 +16,13 @@ namespace Battleship
         Dictionary<string, List<ShipTile>> AllAiShips, AllPlayerShips;
         private int aiShipSunk, userShipSunk;
 
+        public static int AiShipSunk
+        {
+            get { return AiShipSunk; }
+        }
+
+
+
         List<ShipTile> tempShip = new();
 
         private int shipAdded = 0;
@@ -58,7 +65,6 @@ namespace Battleship
 
         private void GrdFire_FireClick(FireEventArgs fireEventArgs)
         {
-
             Player.playerStepCounter++;
             LblStepsPlayer.Text = Player.playerStepCounter.ToString();
             HitCheck(fireEventArgs);
