@@ -140,6 +140,9 @@ namespace Battleship.model
                 col.Add(st.ColCoord);
             }
 
+            row.Sort();
+            col.Sort();
+
             if(row[0] == row[1])
             {
                 return col.Zip(col.Skip(1), (a, b) => a + 1 == b).All(x => x) || col.Zip(col.Skip(1), (a, b) => a - 1 == b).All(x => x);
