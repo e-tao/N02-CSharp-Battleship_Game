@@ -20,7 +20,7 @@ namespace Battleship.model
         {
             if(AllShips.Count < GameVariables.numberOfShips)
             {
-                MessageBox.Show("You are out numbered by your opponent.", "SHIP NUMBER IS NOT ENOUGH!", MessageBoxButtons.OK);
+                MessageBox.Show("Out numbered by your opponent.", "SHIP NUMBER IS NOT ENOUGH!", MessageBoxButtons.OK);
                 return null;
             }
             else

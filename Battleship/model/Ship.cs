@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.Linq;
 using System.Windows.Forms;
 
 namespace Battleship.model
@@ -125,13 +126,34 @@ namespace Battleship.model
 
         public static bool ShipLengthCheck(List<ShipTile> tempShip)
         {
-            if(tempShip.Count < GameVariables.shipMinLength || tempShip.Count > GameVariables.shipMaxLength)
-            {
-                MessageBox.Show("Min 2 tiles, Max 4 tiles", "INVALID SHIP SIZE", MessageBoxButtons.OK);
-                return true;
-            }
-            return false;
+            return tempShip.Count >= GameVariables.shipMinLength & tempShip.Count <= GameVariables.shipMaxLength;
         }
+
+        public static bool OddShipShapeCheck(List<ShipTile> tempShip)
+        {
+            List<int> row = new();
+            List<int> col = new();
+            
+            foreach(ShipTile st in tempShip)
+            {
+                row.Add(st.RowCoord);
+                col.Add(st.ColCoord);
+            }
+
+            if(row[0] == row[1])
+            {
+                return col.Zip(col.Skip(1), (a, b) => a + 1 == b).All(x => x) || col.Zip(col.Skip(1), (a, b) => a - 1 == b).All(x => x);
+            } else if(col[0] == col[1])
+            {
+                return row.Zip(row.Skip(1), (a, b) => a + 1 == b).All(x => x) || row.Zip(row.Skip(1), (a, b) => a - 1 == b).All(x => x);
+            }
+            else
+            {
+                return false;
+            }
+        }
+
+
 
 
         private static void Output(string whichDirection)

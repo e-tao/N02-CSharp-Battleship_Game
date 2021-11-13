@@ -94,14 +94,8 @@ namespace Battleship.model
             randStartRow = rand.Next(0, GameVariables.boundry);
             randStartCol = rand.Next(0, GameVariables.boundry);
             newLocation = new int[] { randStartRow, randStartCol };
-            if (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
-            {
-                return true;
-            }
-            else
-            {
-                return false;
-            }
+            return (TriedTiles.Any(p => p.SequenceEqual(newLocation)));
+
         }
     }
 }

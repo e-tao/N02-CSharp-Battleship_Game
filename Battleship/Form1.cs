@@ -5,7 +5,6 @@ using System.Diagnostics;
 using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Threading;
 using System.Windows.Forms;
 
 namespace Battleship
@@ -14,17 +13,17 @@ namespace Battleship
     {
         private Ai ai;
         private Player player;
-    
+
         Dictionary<string, List<ShipTile>> AllAiShips, AllPlayerShips;
         private int aiShipSunk, userShipSunk;
 
-        List<ShipTile> tempShip;
+        List<ShipTile> tempShip = new();
 
         private int shipAdded = 0;
 
         public Form1()
         {
-            tempShip = new();
+
             InitializeComponent();
         }
 
@@ -32,16 +31,16 @@ namespace Battleship
         {
             ai = new();
             player = new();
-
             aiShipSunk = 0;
             userShipSunk = 0;
             AllAiShips = ai.GameStart();
             AllPlayerShips = player.GameStart();
 
             EnableLeftGrid();
-            
 
-            if (AllAiShips == null || AllPlayerShips == null)
+
+
+ /*           if (AllAiShips == null || AllPlayerShips == null)
             {
                 Application.Restart();
             }
@@ -55,15 +54,14 @@ namespace Battleship
                 {
                     Debug.WriteLine($"Coordinates:({ st.RowCoord}, { st.ColCoord})");
                 }
-            }
-            //Debug.Write($"there are {numOfShipsAi} ships");
+            }*/
 
         }
 
         private void GrdFire_FireClick(FireEventArgs fireEventArgs)
         {
-            
-            Player.playerStepCounter++; 
+
+            Player.playerStepCounter++;
             LblStepsPlayer.Text = Player.playerStepCounter.ToString();
             HitCheck(fireEventArgs);
 
@@ -112,8 +110,6 @@ namespace Battleship
                     aiShipSunk++;
                     LblAiShipLeft.Text = (GameVariables.numberOfShips - aiShipSunk).ToString();
                     LblShipSunk.Text = "Ai " + pair.Key + " is sunk.";
-                    
-                    //Debug.WriteLine(pair.Key + " is sunk" + aiShipSunk + " sunk");
                 }
             }
 
@@ -125,8 +121,6 @@ namespace Battleship
                     userShipSunk++;
                     LblPlayerShipLeft.Text = (GameVariables.numberOfShips - userShipSunk).ToString();
                     LblShipSunk.Text = "Player " + pair.Key + " is sunk.";
-                    //Debug.WriteLine(pair.Key + " is sunk");
-
                 }
             }
         }
@@ -146,7 +140,7 @@ namespace Battleship
             }
             else
             {
-                LblResultPlayer.Text="";
+                LblResultPlayer.Text = "";
                 LblResultAi.Text = "";
             }
 
@@ -154,45 +148,47 @@ namespace Battleship
 
         private void BtnAdd_Click(object sender, EventArgs e)
         {
-            
-
-            if (!Ship.ShipLengthCheck(tempShip) )
+            if (Ship.ShipLengthCheck(tempShip) && Ship.OddShipShapeCheck(tempShip))
             {
                 Player.AddShip(tempShip);
                 shipAdded++;
+                LblPlayerShipLeft.Text = shipAdded.ToString();
                 tempShip.Clear();
             }
-            if (shipAdded == GameVariables.numberOfShips ) {
+            else
+            {
+                MessageBox.Show($"Ship length between {GameVariables.shipMinLength} and {GameVariables.shipMaxLength}. \r\nIt's not Tetris, the ship need to be placed straight.", "ERROR", MessageBoxButtons.OK);
+                BtnCancel_Click(sender, e);
+            
+            }
+            if (shipAdded == GameVariables.numberOfShips)
+            {
                 DisableRightGrid();
             }
+            BtnStart.Enabled = shipAdded == 4 ? true : false;
+
         }
 
         private void BtnReset_Click(object sender, EventArgs e)
         {
-            GrdPlayer.InitGrid();
-            Player.ResetShip();
-            GrdFire.InitGrid();
-            DisableLeftGrid();
-            EnableRightGrid();
+            Application.Restart();
         }
+
 
         private void Form1_Load(object sender, EventArgs e)
         {
             LblStepsPlayer.Text = "0";
             LblStepsAi.Text = "0";
             LblAiShipLeft.Text = GameVariables.numberOfShips.ToString();
-            LblPlayerShipLeft.Text = GameVariables.numberOfShips.ToString();
+            BtnStart.Enabled = false;
             DisableLeftGrid();
-
         }
-
 
 
         private void GrdPlayer_GridClick(FireEventArgs fireEventArgs)
         {
             int r = fireEventArgs.MissileButton.RowCoord;
             int c = fireEventArgs.MissileButton.ColCoord;
-            fireEventArgs.MissileButton.Enabled = false;
             GridTile aShipTile = GrdPlayer.Tiles[c, r];
             aShipTile.BackColor = aShipTile.BackColor == Color.FromArgb(65, 102, 245) ? aShipTile.BackColor = Color.Black : aShipTile.BackColor = Color.FromArgb(65, 102, 245);
 
@@ -221,10 +217,14 @@ namespace Battleship
         private void DisableRightGrid()
         {
             this.GrdPlayer.GridClick -= new Battleship.model.GameGrid.GridPosition(this.GrdPlayer_GridClick);
+            BtnAdd.Enabled = false;
+            BtnCancel.Enabled = false;
         }
         private void EnableRightGrid()
         {
             this.GrdPlayer.GridClick += new Battleship.model.GameGrid.GridPosition(this.GrdPlayer_GridClick);
+            BtnAdd.Enabled = true;
+            BtnCancel.Enabled = true;
         }
 
 
@@ -236,11 +236,8 @@ namespace Battleship
         private void EnableLeftGrid()
         {
             this.GrdFire.GridClick += new Battleship.model.GameGrid.GridPosition(this.GrdFire_FireClick);
+            BtnStart.Enabled = true;
         }
-
-
-
-
     }
 
     public class GameVariables
@@ -253,13 +250,13 @@ namespace Battleship
 
         private static string[] ConfigFromFile()
         {
-                StreamReader file = new StreamReader("config.txt");
-                String sConfig = file.ReadToEnd();
-                file.Close();
-                string[] configs = sConfig.Split(',');
-                return configs;
+            StreamReader file = new StreamReader("config.txt");
+            String sConfig = file.ReadToEnd();
+            file.Close();
+            string[] configs = sConfig.Split(',');
+            return configs;
         }
     }
 
- 
+
 }
