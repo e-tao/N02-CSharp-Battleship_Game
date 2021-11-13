@@ -106,7 +106,7 @@ namespace Battleship
                 {
                     AllAiShips.Remove(pair.Key);
                     aiShipSunk++;
-                    LblAiShipLeft.Text = (GameVariables.numberOfShips - aiShipSunk).ToString();
+                    LblAiShipLeft.Text = (GameVariables.NumberOfShips() - aiShipSunk).ToString();
                     LblShipSunk.Text = "Ai " + pair.Key + " is sunk.";
                 }
             }
@@ -117,7 +117,7 @@ namespace Battleship
                 {
                     AllPlayerShips.Remove(pair.Key);
                     userShipSunk++;
-                    LblPlayerShipLeft.Text = (GameVariables.numberOfShips - userShipSunk).ToString();
+                    LblPlayerShipLeft.Text = (GameVariables.NumberOfShips() - userShipSunk).ToString();
                     LblShipSunk.Text = "Player " + pair.Key + " is sunk.";
                 }
             }
@@ -126,12 +126,12 @@ namespace Battleship
         private void WinnerCheck()
         {
 
-            if (aiShipSunk == GameVariables.numberOfShips)
+            if (aiShipSunk == GameVariables.NumberOfShips())
             {
                 LblResultPlayer.Text = "Winner";
                 DisableLeftGrid();
             }
-            else if (userShipSunk == GameVariables.numberOfShips)
+            else if (userShipSunk == GameVariables.NumberOfShips())
             {
                 LblResultAi.Text = "Winner";
                 DisableLeftGrid();
@@ -159,11 +159,11 @@ namespace Battleship
                 BtnCancel_Click(sender, e);
 
             }
-            if (shipAdded == GameVariables.numberOfShips)
+            if (shipAdded == GameVariables.NumberOfShips())
             {
                 DisableRightGrid();
             }
-            BtnStart.Enabled = shipAdded == GameVariables.numberOfShips ? true : false;
+            BtnStart.Enabled = shipAdded == GameVariables.NumberOfShips() ? true : false;
 
         }
 
@@ -177,7 +177,7 @@ namespace Battleship
         {
             LblStepsPlayer.Text = "0";
             LblStepsAi.Text = "0";
-            LblAiShipLeft.Text = GameVariables.numberOfShips.ToString();
+            LblAiShipLeft.Text = GameVariables.NumberOfShips().ToString();
             BtnStart.Enabled = false;
             DisableLeftGrid();
         }
@@ -241,19 +241,45 @@ namespace Battleship
 
     public class GameVariables
     {
-
-        private static int shipMinimum = int.Parse(ConfigFromFile()[0]);
-        private static int gridMinimum = int.Parse(ConfigFromFile()[1]);
-
-        private static string configFile = "config.txt";
-        public static int numberOfShips = File.Exists(configFile) ? (shipMinimum >= 3 ? shipMinLength : 3) : 4;
-        public static int boundry = File.Exists(configFile) ? (gridMinimum >= 6 ? gridMinimum : 6) : 10;
         public static int shipMinLength = 2;
         public static int shipMaxLength = 4;
+ 
+
+        private static string configFile = "config.txt";
+        private static int ships;
+        private static int grids;
+
+        public static int NumberOfShips()
+        {
+            if (File.Exists(configFile))
+            {
+                ships = int.Parse(ConfigFromFile()[0]);
+                if (ships < 3)
+                {
+                    return 3;
+                }
+            }
+            return 4;
+        }
+
+
+        public static int Boundry()
+        {
+            if (File.Exists(configFile))
+            {
+                grids = int.Parse(ConfigFromFile()[1]);
+                if (grids < 6)
+                {
+                    return 6;
+                }
+            }
+                return 10;
+           }
+
 
         private static string[] ConfigFromFile()
         {
-            StreamReader file = new StreamReader("config.txt");
+            StreamReader file = new StreamReader(configFile);
             String sConfig = file.ReadToEnd();
             file.Close();
             string[] configs = sConfig.Split(',');

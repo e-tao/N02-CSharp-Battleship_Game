@@ -1,16 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using System.Windows.Forms;
+﻿using System.Windows.Forms;
 
 namespace Battleship.model
 {
-
     public partial class GameGrid : UserControl
     {
         public delegate void GridPosition(FireEventArgs fireEventArgs);
@@ -23,7 +14,8 @@ namespace Battleship.model
         {
             InitializeComponent();
             layoutPanel = new();
-            rows = cols = GameVariables.boundry;
+            rows = GameVariables.Boundry();
+            cols = GameVariables.Boundry();
             InitGrid();
         }
 
@@ -41,7 +33,7 @@ namespace Battleship.model
                     {
                         for (int j = 0; j < cols; j++)
                         {
-                            missiles[i,j] = (GridTile)layoutPanel.GetControlFromPosition(i,j);
+                            missiles[i, j] = (GridTile)layoutPanel.GetControlFromPosition(i, j);
                         }
                     }
                 }
@@ -68,7 +60,7 @@ namespace Battleship.model
 
             layoutPanel.RowCount = rows;
             layoutPanel.ColumnCount = cols;
-            
+
 
             for (int i = 0; i < layoutPanel.RowCount; i++)
             {
@@ -83,7 +75,7 @@ namespace Battleship.model
                     new ColumnStyle(SizeType.Percent, 100 / layoutPanel.ColumnCount)
                     );
             }
-           
+
 
             for (int i = 0; i < layoutPanel.RowCount; i++)
             {

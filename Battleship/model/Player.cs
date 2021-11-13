@@ -26,7 +26,7 @@ namespace Battleship.model
                 currentShip.Add(st);
             }
             int ships = AllShips.Count();
-            if (ships < GameVariables.numberOfShips)
+            if (ships < GameVariables.NumberOfShips())
             {
                 AllShips.Add("Ship" + (ships + 1), currentShip);
             }
@@ -34,14 +34,14 @@ namespace Battleship.model
             {
                 MessageBox.Show("Exceeds Maximum ships");
             }
-            foreach (KeyValuePair<string, List<ShipTile>> pair in AllShips)
+            /*foreach (KeyValuePair<string, List<ShipTile>> pair in AllShips)
             {
                 Debug.WriteLine("Key :" + pair.Key);
                 foreach (ShipTile st in pair.Value)
                 {
                     Debug.WriteLine($"Coordinates:({ st.RowCoord}, { st.ColCoord})");
                 }
-            }
+            }*/
         }
     }
 }

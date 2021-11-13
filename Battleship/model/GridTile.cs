@@ -1,14 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Drawing;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Drawing;
 using System.Windows.Forms;
 
 namespace Battleship.model
 {
-    public class GridTile:Button
+    public class GridTile : Button
     {
         public int RowCoord { get; set; }
         public int ColCoord { get; set; }

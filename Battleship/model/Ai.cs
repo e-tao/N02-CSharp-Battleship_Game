@@ -23,7 +23,7 @@ namespace Battleship.model
         {
             List<ShipTile> currentShip;
 
-            for (int i = 0; i < GameVariables.numberOfShips; i++)
+            for (int i = 0; i < GameVariables.NumberOfShips(); i++)
             {
                 currentShip = Ship.MakeAShip();
                 while (AllShips != null && DuplicateTile(currentShip))
@@ -91,8 +91,8 @@ namespace Battleship.model
 
         private static bool RepeatedLocation()
         {
-            randStartRow = rand.Next(0, GameVariables.boundry);
-            randStartCol = rand.Next(0, GameVariables.boundry);
+            randStartRow = rand.Next(0, GameVariables.Boundry());
+            randStartCol = rand.Next(0, GameVariables.Boundry());
             newLocation = new int[] { randStartRow, randStartCol };
             return (TriedTiles.Any(p => p.SequenceEqual(newLocation)));
 
