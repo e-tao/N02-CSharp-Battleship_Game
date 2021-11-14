@@ -146,6 +146,7 @@ namespace Battleship.model
                         {
                             newLocation = AroundHittedTile[0];
                         }
+                        else { break; }
                     }
                 }
                 else

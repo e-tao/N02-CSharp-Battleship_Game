@@ -104,7 +104,7 @@ namespace Battleship
                     AllAiShips.Remove(pair.Key);
                     aiShipSunk++;
                     LblAiShipLeft.Text = (GameVariables.NumberOfShips - aiShipSunk).ToString();
-                    LblShipSunk.Text = "Ai " + pair.Key + " is sunk.";
+                    LblShipSunk.Text = "Ai " + pair.Key + " sunk.";
                 }
             }
 
@@ -115,7 +115,7 @@ namespace Battleship
                     AllPlayerShips.Remove(pair.Key);
                     userShipSunk++;
                     LblPlayerShipLeft.Text = (GameVariables.NumberOfShips - userShipSunk).ToString();
-                    LblShipSunk.Text = "Player " + pair.Key + " is sunk.";
+                    LblShipSunk.Text = "Player " + pair.Key + " sunk.";
                     ShipSunk = true;
                 }
             }
