@@ -19,7 +19,6 @@ namespace Battleship
         public static bool ShipSunk { get; set; } = false;
 
 
-
         List<ShipTile> tempShip = new();
 
         private int shipAdded = 0;

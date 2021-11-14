@@ -12,7 +12,6 @@ namespace Battleship.model
 
         public static int aiStepCounter { get; set; } = 0;
 
-
         private static Random rand = new();
         private static int randStartRow;
         private static int randStartCol;
@@ -22,10 +21,6 @@ namespace Battleship.model
 
         private static bool hitAround = false;
         private static bool missed = true;
-        private static int counter = 0;
-        private static bool repeated;
-
-        private static ShipTile lastHitted;
 
         public Dictionary<string, List<ShipTile>> GameStart()
         {
@@ -220,7 +215,5 @@ namespace Battleship.model
                 hitOrders[r] = tmp;
             }
         }
-
-
     }
 }

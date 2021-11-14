@@ -12,7 +12,6 @@ namespace Battleship.model
         public int ColCoord;
     }
 
-
     public class Ship
     {
         private static int ShipLength;

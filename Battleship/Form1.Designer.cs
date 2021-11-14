@@ -29,6 +29,7 @@ namespace Battleship
         /// </summary>
         private void InitializeComponent()
         {
+            System.ComponentModel.ComponentResourceManager resources = new System.ComponentModel.ComponentResourceManager(typeof(Form1));
             this.BtnStart = new System.Windows.Forms.Button();
             this.GrdPlayer = new Battleship.model.GameGrid();
             this.GrdFire = new Battleship.model.GameGrid();
@@ -278,6 +279,7 @@ namespace Battleship
             this.Controls.Add(this.GrdPlayer);
             this.Controls.Add(this.BtnStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
             this.MaximizeBox = false;
             this.Name = "Form1";
             this.Text = "-=Battleship=-";

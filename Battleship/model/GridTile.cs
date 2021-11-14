@@ -8,7 +8,6 @@ namespace Battleship.model
         public int RowCoord { get; set; }
         public int ColCoord { get; set; }
 
-
         public GridTile(int RowCoord, int ColCoord)
         {
             this.RowCoord = RowCoord;
