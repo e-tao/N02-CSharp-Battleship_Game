@@ -14,8 +14,8 @@ namespace Battleship.model
         {
             InitializeComponent();
             layoutPanel = new();
-            rows = GameVariables.Boundry();
-            cols = GameVariables.Boundry();
+            rows = GameVariables.Boundry;
+            cols = GameVariables.Boundry;
             InitGrid();
         }
 

@@ -231,7 +231,6 @@ namespace Battleship
             this.LblAiShipLeft.Name = "LblAiShipLeft";
             this.LblAiShipLeft.Size = new System.Drawing.Size(0, 20);
             this.LblAiShipLeft.TabIndex = 16;
-            this.LblAiShipLeft.TextChanged += new System.EventHandler(this.LblAiShipLeft_TextChanged);
             // 
             // pictureBox1
             // 

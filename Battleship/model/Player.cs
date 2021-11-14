@@ -26,7 +26,7 @@ namespace Battleship.model
                 currentShip.Add(st);
             }
             int ships = AllShips.Count();
-            if (ships < GameVariables.NumberOfShips())
+            if (ships < GameVariables.NumberOfShips)
             {
                 AllShips.Add("Ship" + (ships + 1), currentShip);
             }

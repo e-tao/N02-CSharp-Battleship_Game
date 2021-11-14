@@ -115,13 +115,13 @@ namespace Battleship.model
         private static void RandomStart()
         {
             ShipLength = rand.Next(GameVariables.shipMinLength, GameVariables.shipMaxLength+1);
-            randStartRow = rand.Next(0, GameVariables.Boundry()); 
-            randStartCol = rand.Next(0, GameVariables.Boundry()); 
+            randStartRow = rand.Next(0, GameVariables.Boundry); 
+            randStartCol = rand.Next(0, GameVariables.Boundry); 
         }
 
         private static bool OutOfBoundry(int limit)
         {
-            return (limit < 0 || limit >= GameVariables.Boundry());
+            return (limit < 0 || limit >= GameVariables.Boundry);
         }
 
         public static bool ShipLengthCheck(List<ShipTile> tempShip)

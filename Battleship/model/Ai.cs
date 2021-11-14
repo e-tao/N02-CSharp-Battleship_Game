@@ -8,6 +8,7 @@ namespace Battleship.model
     class Ai
     {
         Dictionary<string, List<ShipTile>> AllShips = new();
+        private static List<int[]> AroundHittedTile;
 
         public static int aiStepCounter { get; set; } = 0;
 
@@ -21,7 +22,8 @@ namespace Battleship.model
 
         private static bool hitAround = false;
         private static bool missed = true;
-        private static bool repeated = false;
+        private static int counter = 0;
+        private static bool repeated;
 
         private static ShipTile lastHitted;
 
@@ -29,7 +31,7 @@ namespace Battleship.model
         {
             List<ShipTile> currentShip;
 
-            for (int i = 0; i < GameVariables.NumberOfShips(); i++)
+            for (int i = 0; i < GameVariables.NumberOfShips; i++)
             {
                 currentShip = Ship.MakeAShip();
                 while (AllShips != null && DuplicateTile(currentShip))
@@ -59,24 +61,20 @@ namespace Battleship.model
 
         public static void AiFireBack(GameGrid GrdPlayer, Dictionary<string, List<ShipTile>> AllPlayerShips)
         {
-            newLocation = NewLocation();
 
-            repeated = TriedTiles.Any(p => p.SequenceEqual(newLocation)) ? true : false;
 
-            switch (missed)
+            if (missed)
             {
-                case true:
-                    while (repeated)
-                    {
-                        newLocation = NewLocation();
-                    }
-                    break;
-
-                case false:
-                    newLocation = TryHitAround(lastHitted);
-                    break;
+                newLocation = RandomFire();
+                while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+                {
+                    newLocation = RandomFire();
+                }
             }
-
+            else
+            {
+                newLocation = TryHitAround();
+            }
 
             TriedTiles.Add(newLocation);
 
@@ -93,13 +91,12 @@ namespace Battleship.model
                 {
                     if (pair.Value.Contains(firedAt) && aShipTile.BackColor == Color.Black)
                     {
-                        lastHitted = pair.Value[0];
+                        //lastHitted = pair.Value[0];
                         pair.Value.Remove(firedAt);
                         aShipTile.BackColor = Color.Red;
-
                         missed = false;
                         hitAround = true;
-
+                        LocalAroudHitedTile(firedAt);
                         //Debug.WriteLine($"Hit @ ({randStartRow}, {randStartCol})");
                     }
                     else if (aShipTile.BackColor == Color.FromArgb(65, 102, 245))
@@ -110,55 +107,78 @@ namespace Battleship.model
             }
         }
 
-        private static int[] NewLocation()
+        private static int[] RandomFire()
         {
-            randStartRow = rand.Next(0, GameVariables.Boundry());
-            randStartCol = rand.Next(0, GameVariables.Boundry());
+            randStartRow = rand.Next(0, GameVariables.Boundry);
+            randStartCol = rand.Next(0, GameVariables.Boundry);
             newLocation = new int[] { randStartRow, randStartCol };
-            repeated = false;
-
             return newLocation;
+        }
 
+        private static void LocalAroudHitedTile(ShipTile HittedTile)
+        {
+            AroundHittedTile = new();
 
+            AroundHittedTile.Add(HitUp(HittedTile.RowCoord, HittedTile.ColCoord));
+            AroundHittedTile.Add(HitDown(HittedTile.RowCoord, HittedTile.ColCoord));
+            AroundHittedTile.Add(HitLeft(HittedTile.RowCoord, HittedTile.ColCoord));
+            AroundHittedTile.Add(HitRight(HittedTile.RowCoord, HittedTile.ColCoord));
+
+            for (int i = 0; i < AroundHittedTile.Count; i++)
+            {
+                if (TriedTiles.Any(p => p.SequenceEqual(AroundHittedTile[i])))
+                {
+                    AroundHittedTile.RemoveAt(i);
+                }
+            }
+            Shuffle(AroundHittedTile);
         }
 
 
-        private static int[] TryHitAround(ShipTile HitedTile)
+        private static int[] TryHitAround()
         {
-            newLocation = HitUp(HitedTile.RowCoord, HitedTile.ColCoord);
 
-            if (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+
+            if (!Form1.ShipSunk)
             {
-                newLocation = HitDown(HitedTile.RowCoord, HitedTile.ColCoord);
+                if (AroundHittedTile.Count > 0)
+                {
+                    newLocation = AroundHittedTile[0];
+                    while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))  // the while loop is for cornor or edge situation that the hitted tile will be added in the list.
+                    {
+                        AroundHittedTile.Remove(newLocation);
+                        if (AroundHittedTile.Count != 0)
+                        {
+                            newLocation = AroundHittedTile[0];
+                        }
+                    }
+                }
+                else
+                {
+                    newLocation = RandomFire();
+                    while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+                    {
+                        newLocation = RandomFire();
+                    }
+                }
             }
-
-            if (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+            else if (Form1.ShipSunk)
             {
-                newLocation = HitLeft(HitedTile.RowCoord, HitedTile.ColCoord);
-            }
-
-            if (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
-            {
-                newLocation = HitRight(HitedTile.RowCoord, HitedTile.ColCoord);
-            }
-
-            if (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
-            {
-                newLocation = new int[] { randStartRow, randStartCol };
                 hitAround = false;
                 missed = true;
+                AroundHittedTile.Clear();
+                Form1.ShipSunk = false;
+                newLocation = RandomFire();
+                while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+                {
+                    newLocation = RandomFire();
+                }
             }
 
             randStartRow = newLocation[0];
             randStartCol = newLocation[1];
+            AroundHittedTile.Remove(newLocation);
             return newLocation;
-
-            /*            newLocation = !TriedTiles.Any(p => p.SequenceEqual(HitUp(HitedTile.RowCoord, HitedTile.ColCoord))) ? HitDown(HitedTile.RowCoord, HitedTile.ColCoord) :
-                                        !TriedTiles.Any(p => p.SequenceEqual(HitDown(HitedTile.RowCoord, HitedTile.ColCoord))) ? HitLeft(HitedTile.RowCoord, HitedTile.ColCoord) :
-                                           !TriedTiles.Any(p => p.SequenceEqual(HitLeft(HitedTile.RowCoord, HitedTile.ColCoord))) ? HitRight(HitedTile.RowCoord, HitedTile.ColCoord) :
-                                                 new int[] { randStartRow, randStartCol };*/
-
-
         }
 
         private static int[] HitUp(int r, int c)
@@ -170,7 +190,7 @@ namespace Battleship.model
 
         private static int[] HitDown(int r, int c)
         {
-            r = (r + 1) <= GameVariables.Boundry() ? r + 1 : GameVariables.Boundry();
+            r = (r + 1) < GameVariables.Boundry ? r + 1 : (GameVariables.Boundry - 1);
             newLocation = new int[] { r, c };
             return newLocation;
         }
@@ -184,9 +204,21 @@ namespace Battleship.model
 
         private static int[] HitRight(int r, int c)
         {
-            c = (c + 1) <= GameVariables.Boundry() ? c + 1 : GameVariables.Boundry();
+            c = (c + 1) < GameVariables.Boundry ? c + 1 : (GameVariables.Boundry - 1);
             newLocation = new int[] { r, c };
             return newLocation;
+        }
+
+        private static void Shuffle(List<int[]> hitOrders)
+        {
+            // Knuth shuffle algorithm :: courtesy of Wikipedia :) found online;
+            for (int t = 0; t < hitOrders.Count; t++)
+            {
+                int[] tmp = hitOrders[t];
+                int r = rand.Next(t, hitOrders.Count);
+                hitOrders[t] = hitOrders[r];
+                hitOrders[r] = tmp;
+            }
         }
 
 

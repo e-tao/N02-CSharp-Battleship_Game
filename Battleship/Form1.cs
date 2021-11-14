@@ -16,10 +16,7 @@ namespace Battleship
         Dictionary<string, List<ShipTile>> AllAiShips, AllPlayerShips;
         private int aiShipSunk, userShipSunk;
 
-        public static int AiShipSunk
-        {
-            get { return AiShipSunk; }
-        }
+        public static bool ShipSunk { get; set; } = false;
 
 
 
@@ -45,12 +42,7 @@ namespace Battleship
 
 
 
-            /*           if (AllAiShips == null || AllPlayerShips == null)
-                       {
-                           Application.Restart();
-                       }
-
-
+            /*           
                        foreach (KeyValuePair<string, List<ShipTile>> pair in AllAiShips)
                        {
                            Debug.WriteLine("Key :" + pair.Key);
@@ -112,7 +104,7 @@ namespace Battleship
                 {
                     AllAiShips.Remove(pair.Key);
                     aiShipSunk++;
-                    LblAiShipLeft.Text = (GameVariables.NumberOfShips() - aiShipSunk).ToString();
+                    LblAiShipLeft.Text = (GameVariables.NumberOfShips - aiShipSunk).ToString();
                     LblShipSunk.Text = "Ai " + pair.Key + " is sunk.";
                 }
             }
@@ -123,8 +115,9 @@ namespace Battleship
                 {
                     AllPlayerShips.Remove(pair.Key);
                     userShipSunk++;
-                    LblPlayerShipLeft.Text = (GameVariables.NumberOfShips() - userShipSunk).ToString();
+                    LblPlayerShipLeft.Text = (GameVariables.NumberOfShips - userShipSunk).ToString();
                     LblShipSunk.Text = "Player " + pair.Key + " is sunk.";
+                    ShipSunk = true;
                 }
             }
         }
@@ -132,12 +125,12 @@ namespace Battleship
         private void WinnerCheck()
         {
 
-            if (aiShipSunk == GameVariables.NumberOfShips())
+            if (aiShipSunk == GameVariables.NumberOfShips)
             {
                 LblResultPlayer.Text = "Winner";
                 DisableLeftGrid();
             }
-            else if (userShipSunk == GameVariables.NumberOfShips())
+            else if (userShipSunk == GameVariables.NumberOfShips)
             {
                 LblResultAi.Text = "Winner";
                 DisableLeftGrid();
@@ -165,11 +158,11 @@ namespace Battleship
                 BtnCancel_Click(sender, e);
 
             }
-            if (shipAdded == GameVariables.NumberOfShips())
+            if (shipAdded == GameVariables.NumberOfShips)
             {
                 DisableRightGrid();
             }
-            BtnStart.Enabled = shipAdded == GameVariables.NumberOfShips() ? true : false;
+            BtnStart.Enabled = shipAdded == GameVariables.NumberOfShips ? true : false;
 
         }
 
@@ -183,7 +176,7 @@ namespace Battleship
         {
             LblStepsPlayer.Text = "0";
             LblStepsAi.Text = "0";
-            LblAiShipLeft.Text = GameVariables.NumberOfShips().ToString();
+            LblAiShipLeft.Text = GameVariables.NumberOfShips.ToString();
             BtnStart.Enabled = false;
             DisableLeftGrid();
         }
@@ -231,7 +224,6 @@ namespace Battleship
             BtnCancel.Enabled = true;
         }
 
-
         private void DisableLeftGrid()
         {
             this.GrdFire.GridClick -= new Battleship.model.GameGrid.GridPosition(this.GrdFire_FireClick);
@@ -249,47 +241,43 @@ namespace Battleship
     {
         public static int shipMinLength = 2;
         public static int shipMaxLength = 4;
- 
 
-        private static string configFile = "config.txt";
-        private static int ships;
-        private static int grids;
 
-        public static int NumberOfShips()
+
+        public static int NumberOfShips
         {
-            if (File.Exists(configFile))
-            {
-                ships = int.Parse(ConfigFromFile()[0]);
-                if (ships < 3)
-                {
-                    return 3;
-                }
-            }
-            return 4;
+            get { return ships = ships < 3 ? 3 : ships; }
+
         }
 
-
-        public static int Boundry()
+        public static int Boundry
         {
-            if (File.Exists(configFile))
-            {
-                grids = int.Parse(ConfigFromFile()[1]);
-                if (grids < 6)
-                {
-                    return 6;
-                }
-            }
-                return 10;
-           }
+            get { return boundry = boundry < 6 ? 6 : boundry; }
+
+        }
+
+        private static int boundry = int.Parse(ConfigFromFile()[1]);
+        private static int ships = int.Parse(ConfigFromFile()[0]);
 
 
         private static string[] ConfigFromFile()
         {
-            StreamReader file = new StreamReader(configFile);
-            String sConfig = file.ReadToEnd();
-            file.Close();
-            string[] configs = sConfig.Split(',');
-            return configs;
+            string configFile = "config.txt";
+
+            if (File.Exists(configFile))
+            {
+                using StreamReader file = new StreamReader(configFile);
+                String sConfig = file.ReadToEnd();
+                string[] configs = sConfig.Split(',');
+                return configs;
+            }
+            else
+            {
+                string[] configs = new string[] { "3", "8" };
+                return configs;
+            }
+
+
         }
     }
 
