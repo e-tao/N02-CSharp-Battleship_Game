@@ -115,9 +115,25 @@ namespace Battleship.model
         }
 
         private static int[] RandomFire()
-        {
+        {                                                                     // Ai guess in either [even, even] or [odd, odd] coordinates pair
             randStartRow = rand.Next(0, GameVariables.Boundry);
             randStartCol = rand.Next(0, GameVariables.Boundry);
+
+            if (randStartRow%2 == 0)
+            {
+                while(randStartCol%2 != 0)
+                {
+                    randStartCol = rand.Next(0, GameVariables.Boundry);
+                }
+                
+            } else if(randStartRow%2 != 0)
+            {
+                while(randStartCol%2 == 0)
+                {
+                    randStartCol = rand.Next(0, GameVariables.Boundry);
+                }
+            }
+
             newLocation = new int[] { randStartRow, randStartCol };
             return newLocation;
         }
