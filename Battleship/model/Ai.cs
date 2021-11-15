@@ -24,7 +24,7 @@ namespace Battleship.model
         private static bool missed = true;
 
         private static int[] firstHitted = null;  //make it readonly unless reset
-        public static int[] FirstHitted 
+        public static int[] FirstHitted
         {
             get { return firstHitted; }
             set { if (firstHitted == null) { firstHitted = value; } }
@@ -93,12 +93,12 @@ namespace Battleship.model
                 {
                     if (pair.Value.Contains(firedAt) && aShipTile.BackColor == Color.Black)
                     {
-                        FirstHitted = new int[]{ firedAt.RowCoord, firedAt.ColCoord};
-                        foreach(var ft in firstHitted)
+                        FirstHitted = new int[] { firedAt.RowCoord, firedAt.ColCoord };
+                        foreach (var ft in firstHitted)
                         {
                             Debug.WriteLine(ft);
                         }
-                        
+
                         pair.Value.Remove(firedAt);
                         aShipTile.BackColor = Color.Red;
                         missed = false;
@@ -119,16 +119,17 @@ namespace Battleship.model
             randStartRow = rand.Next(0, GameVariables.Boundry);
             randStartCol = rand.Next(0, GameVariables.Boundry);
 
-            if (randStartRow%2 == 0)
+            if (randStartRow % 2 == 0)
             {
-                while(randStartCol%2 != 0)
+                while (randStartCol % 2 != 0)
                 {
                     randStartCol = rand.Next(0, GameVariables.Boundry);
                 }
-                
-            } else if(randStartRow%2 != 0)
+
+            }
+            else if (randStartRow % 2 != 0)
             {
-                while(randStartCol%2 == 0)
+                while (randStartCol % 2 == 0)
                 {
                     randStartCol = rand.Next(0, GameVariables.Boundry);
                 }
@@ -157,38 +158,44 @@ namespace Battleship.model
         }
 
 
+        private static void NoRepeatHit()
+        {
+            newLocation = AroundHittedTile[0];
+            while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))  // the while loop is for cornor or edge situation that the hitted tile will be added in the list.
+            {
+                AroundHittedTile.Remove(newLocation);
+                if (AroundHittedTile.Count != 0)
+                {
+                    newLocation = AroundHittedTile[0];
+                }
+                else { break; }   //break out of the a endless loop while the last tile in the list is the red hitted tile.
+            }
+
+        }
+
+
+
         private static int[] TryHitAround()
         {
             if (!Form1.ShipSunk)
             {
                 if (AroundHittedTile.Count > 0)
                 {
-                    newLocation = AroundHittedTile[0];
-                    while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))  // the while loop is for cornor or edge situation that the hitted tile will be added in the list.
-                    {
-                        AroundHittedTile.Remove(newLocation);
-                        if (AroundHittedTile.Count != 0)
-                        {
-                            newLocation = AroundHittedTile[0];
-                        }
-                        else { break; }   //break out of the a endless loop while the last tile in the list is the red hitted tile.
-                    }
+                    NoRepeatHit();
                 }
                 else
                 {                                                    //find the first hitted tile on the ship and work on the other direction
-                    ShipTile firstHittedTile = new()                     
+                    ShipTile firstHittedTile = new()
                     {
                         RowCoord = firstHitted[0],
                         ColCoord = firstHitted[1]
                     };
                     LocalAroudHitedTile(firstHittedTile);
-                    newLocation = newLocation = AroundHittedTile[0];
+                    if (AroundHittedTile.Count > 0)
+                    {
+                        NoRepeatHit();
+                    }
 
-                    /*                    newLocation = RandomFire();
-                                        while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
-                                        {
-                                            newLocation = RandomFire();
-                                        }*/
                 }
             }
             else if (Form1.ShipSunk)

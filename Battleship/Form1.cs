@@ -261,7 +261,7 @@ namespace Battleship
 
         private static string[] ConfigFromFile()
         {
-            string configFile = "config.txt";
+            string configFile = "config.ini";
 
             if (File.Exists(configFile))
             {

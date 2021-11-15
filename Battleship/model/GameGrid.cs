@@ -1,4 +1,5 @@
-﻿using System.Windows.Forms;
+﻿using System.Drawing;
+using System.Windows.Forms;
 
 namespace Battleship.model
 {
@@ -60,6 +61,7 @@ namespace Battleship.model
 
             layoutPanel.RowCount = rows;
             layoutPanel.ColumnCount = cols;
+            layoutPanel.BackgroundImage = Image.FromFile("images\\background.png");
 
 
             for (int i = 0; i < layoutPanel.RowCount; i++)
