@@ -289,18 +289,18 @@ namespace Battleship
             this.label6.AutoSize = true;
             this.label6.Location = new System.Drawing.Point(541, 722);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(164, 15);
+            this.label6.Size = new System.Drawing.Size(415, 15);
             this.label6.TabIndex = 19;
-            this.label6.Text = "5. Only add one ship at a time";
+            this.label6.Text = "5. Only add one ship at a time, CANCEL will cancel the shipp hasn\'t added yet";
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 737);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(354, 15);
+            this.label7.Size = new System.Drawing.Size(276, 15);
             this.label7.TabIndex = 19;
-            this.label7.Text = "2. Rename config -> config.txt for custmizable ships and grid size ";
+            this.label7.Text = "2. use config.ini for custmizable ships and grid size ";
             // 
             // label8
             // 
@@ -315,7 +315,7 @@ namespace Battleship
             // label9
             // 
             this.label9.AutoSize = true;
-            this.label9.Location = new System.Drawing.Point(760, 722);
+            this.label9.Location = new System.Drawing.Point(541, 737);
             this.label9.Name = "label9";
             this.label9.Size = new System.Drawing.Size(251, 15);
             this.label9.TabIndex = 19;
@@ -333,7 +333,7 @@ namespace Battleship
             // label12
             // 
             this.label12.AutoSize = true;
-            this.label12.Location = new System.Drawing.Point(541, 737);
+            this.label12.Location = new System.Drawing.Point(541, 752);
             this.label12.Name = "label12";
             this.label12.Size = new System.Drawing.Size(402, 15);
             this.label12.TabIndex = 19;
@@ -342,7 +342,7 @@ namespace Battleship
             // label13
             // 
             this.label13.AutoSize = true;
-            this.label13.Location = new System.Drawing.Point(541, 752);
+            this.label13.Location = new System.Drawing.Point(541, 767);
             this.label13.Name = "label13";
             this.label13.Size = new System.Drawing.Size(434, 15);
             this.label13.TabIndex = 19;

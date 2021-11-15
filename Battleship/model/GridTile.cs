@@ -8,13 +8,16 @@ namespace Battleship.model
         public int RowCoord { get; set; }
         public int ColCoord { get; set; }
 
+        private Color sea = Color.FromArgb(190, 65, 102, 245);
+
+
         public GridTile(int RowCoord, int ColCoord)
         {
             this.RowCoord = RowCoord;
             this.ColCoord = ColCoord;
             this.Dock = DockStyle.Fill;
             this.FlatStyle = FlatStyle.Flat;
-            this.BackColor = Color.FromArgb(65, 102, 245);
+            this.BackColor = sea;
         }
     }
 }

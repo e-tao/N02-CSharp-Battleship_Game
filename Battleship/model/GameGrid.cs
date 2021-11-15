@@ -61,7 +61,8 @@ namespace Battleship.model
 
             layoutPanel.RowCount = rows;
             layoutPanel.ColumnCount = cols;
-            layoutPanel.BackgroundImage = Image.FromFile("images\\background.png");
+            layoutPanel.CellBorderStyle = TableLayoutPanelCellBorderStyle.Single;
+            
 
 
             for (int i = 0; i < layoutPanel.RowCount; i++)
@@ -85,6 +86,10 @@ namespace Battleship.model
                 {
 
                     GridTile fireButton = new GridTile(i, j);
+                    fireButton.Padding = new(0);
+                    fireButton.Margin = new(0);
+                    fireButton.FlatStyle = FlatStyle.Flat;
+                    fireButton.FlatAppearance.BorderSize = 0;
 
                     fireButton.Click += (s, ea) =>
                     {

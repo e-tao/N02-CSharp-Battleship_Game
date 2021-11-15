@@ -30,6 +30,14 @@ namespace Battleship.model
             set { if (firstHitted == null) { firstHitted = value; } }
         }
 
+        private static Color sea = Color.FromArgb(190, 65, 102, 245);
+        private static Color hit = Color.FromArgb(190, Color.Red);
+        private static Color miss = Color.FromArgb(190, Color.White);
+        private static Color ship = Color.FromArgb(190, Color.Black);
+        
+
+
+
 
         public Dictionary<string, List<ShipTile>> GameStart()
         {
@@ -91,7 +99,7 @@ namespace Battleship.model
             {
                 for (int i = 0; i < pair.Value.Count; i++)
                 {
-                    if (pair.Value.Contains(firedAt) && aShipTile.BackColor == Color.Black)
+                    if (pair.Value.Contains(firedAt) && aShipTile.BackColor == ship)
                     {
                         FirstHitted = new int[] { firedAt.RowCoord, firedAt.ColCoord };
                         foreach (var ft in firstHitted)
@@ -100,15 +108,15 @@ namespace Battleship.model
                         }
 
                         pair.Value.Remove(firedAt);
-                        aShipTile.BackColor = Color.Red;
+                        aShipTile.BackColor = hit;
                         missed = false;
                         hitAround = true;
                         LocalAroudHitedTile(firedAt);
                         //Debug.WriteLine($"Hit @ ({randStartRow}, {randStartCol})");
                     }
-                    else if (aShipTile.BackColor == Color.FromArgb(65, 102, 245))
+                    else if (aShipTile.BackColor == sea)
                     {
-                        aShipTile.BackColor = Color.White;
+                        aShipTile.BackColor = miss;
                     }
                 }
             }

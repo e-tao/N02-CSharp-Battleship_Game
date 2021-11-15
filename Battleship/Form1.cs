@@ -19,6 +19,12 @@ namespace Battleship
         public static bool ShipSunk { get; set; } = false;
 
 
+        private Color sea = Color.FromArgb(190, 65, 102, 245);
+        private Color hit = Color.FromArgb(190, Color.Red);
+        private Color miss = Color.FromArgb(190, Color.White);
+        private Color ship = Color.FromArgb(190, Color.Black);
+
+
         List<ShipTile> tempShip = new();
 
         private int shipAdded = 0;
@@ -88,9 +94,9 @@ namespace Battleship
                     if (pair.Value.Contains(firedAt))
                     {
                         pair.Value.Remove(firedAt);
-                        aMissile.BackColor = Color.Red;
+                        aMissile.BackColor = hit;
                     }
-                    aMissile.BackColor = aMissile.BackColor == Color.Red ? aMissile.BackColor = Color.Red : aMissile.BackColor = Color.White;
+                    aMissile.BackColor = aMissile.BackColor == hit ? aMissile.BackColor = hit : aMissile.BackColor = miss;
                 }
             }
         }
@@ -186,7 +192,7 @@ namespace Battleship
             int r = fireEventArgs.MissileButton.RowCoord;
             int c = fireEventArgs.MissileButton.ColCoord;
             GridTile aShipTile = GrdPlayer.Tiles[c, r];
-            aShipTile.BackColor = aShipTile.BackColor == Color.FromArgb(65, 102, 245) ? aShipTile.BackColor = Color.Black : aShipTile.BackColor = Color.FromArgb(65, 102, 245);
+            aShipTile.BackColor = aShipTile.BackColor == sea ? aShipTile.BackColor = ship : aShipTile.BackColor = sea;
 
             ShipTile aTileAt = new()
             {
@@ -205,7 +211,7 @@ namespace Battleship
                 r = st.RowCoord;
                 c = st.ColCoord;
                 aShipTile = GrdPlayer.Tiles[c, r];
-                aShipTile.BackColor = Color.FromArgb(65, 102, 245);
+                aShipTile.BackColor = sea;
             }
             tempShip.Clear();
         }
