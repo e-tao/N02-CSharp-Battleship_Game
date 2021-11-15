@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 
@@ -21,6 +22,14 @@ namespace Battleship.model
 
         private static bool hitAround = false;
         private static bool missed = true;
+
+        private static int[] firstHitted = null;  //make it readonly unless reset
+        public static int[] FirstHitted 
+        {
+            get { return firstHitted; }
+            set { if (firstHitted == null) { firstHitted = value; } }
+        }
+
 
         public Dictionary<string, List<ShipTile>> GameStart()
         {
@@ -56,8 +65,6 @@ namespace Battleship.model
 
         public static void AiFireBack(GameGrid GrdPlayer, Dictionary<string, List<ShipTile>> AllPlayerShips)
         {
-
-
             if (missed)
             {
                 newLocation = RandomFire();
@@ -86,7 +93,12 @@ namespace Battleship.model
                 {
                     if (pair.Value.Contains(firedAt) && aShipTile.BackColor == Color.Black)
                     {
-                        //lastHitted = pair.Value[0];
+                        FirstHitted = new int[]{ firedAt.RowCoord, firedAt.ColCoord};
+                        foreach(var ft in firstHitted)
+                        {
+                            Debug.WriteLine(ft);
+                        }
+                        
                         pair.Value.Remove(firedAt);
                         aShipTile.BackColor = Color.Red;
                         missed = false;
@@ -113,7 +125,6 @@ namespace Battleship.model
         private static void LocalAroudHitedTile(ShipTile HittedTile)
         {
             AroundHittedTile = new();
-
             AroundHittedTile.Add(HitUp(HittedTile.RowCoord, HittedTile.ColCoord));
             AroundHittedTile.Add(HitDown(HittedTile.RowCoord, HittedTile.ColCoord));
             AroundHittedTile.Add(HitLeft(HittedTile.RowCoord, HittedTile.ColCoord));
@@ -132,8 +143,6 @@ namespace Battleship.model
 
         private static int[] TryHitAround()
         {
-
-
             if (!Form1.ShipSunk)
             {
                 if (AroundHittedTile.Count > 0)
@@ -146,22 +155,31 @@ namespace Battleship.model
                         {
                             newLocation = AroundHittedTile[0];
                         }
-                        else { break; }
+                        else { break; }   //break out of the a endless loop while the last tile in the list is the red hitted tile.
                     }
                 }
                 else
-                {
-                    newLocation = RandomFire();
-                    while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+                {                                                    //find the first hitted tile on the ship and work on the other direction
+                    ShipTile firstHittedTile = new()                     
                     {
-                        newLocation = RandomFire();
-                    }
+                        RowCoord = firstHitted[0],
+                        ColCoord = firstHitted[1]
+                    };
+                    LocalAroudHitedTile(firstHittedTile);
+                    newLocation = newLocation = AroundHittedTile[0];
+
+                    /*                    newLocation = RandomFire();
+                                        while (TriedTiles.Any(p => p.SequenceEqual(newLocation)))
+                                        {
+                                            newLocation = RandomFire();
+                                        }*/
                 }
             }
             else if (Form1.ShipSunk)
             {
                 hitAround = false;
                 missed = true;
+                firstHitted = null;                                   //reset the first hitted location to null for next ship
                 AroundHittedTile.Clear();
                 Form1.ShipSunk = false;
                 newLocation = RandomFire();
