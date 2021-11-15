@@ -10,8 +10,6 @@ namespace Battleship.model
 
         public static int playerStepCounter { get; set; } = 0;
 
-        public string name { get; set; } = "Player";
-
         public Dictionary<string, List<ShipTile>> GameStart()
         {
             return AllShips;

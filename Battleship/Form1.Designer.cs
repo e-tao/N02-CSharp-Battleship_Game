@@ -57,6 +57,7 @@ namespace Battleship
             // 
             // BtnStart
             // 
+            this.BtnStart.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left)));
             this.BtnStart.FlatAppearance.MouseOverBackColor = System.Drawing.Color.Red;
             this.BtnStart.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnStart.Font = new System.Drawing.Font("Segoe UI", 9F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
@@ -70,7 +71,8 @@ namespace Battleship
             // 
             // GrdPlayer
             // 
-            this.GrdPlayer.Anchor = System.Windows.Forms.AnchorStyles.None;
+            this.GrdPlayer.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.GrdPlayer.Location = new System.Drawing.Point(541, 211);
             this.GrdPlayer.Name = "GrdPlayer";
             this.GrdPlayer.Size = new System.Drawing.Size(500, 480);
@@ -89,6 +91,7 @@ namespace Battleship
             // 
             // BtnAdd
             // 
+            this.BtnAdd.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnAdd.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnAdd.Location = new System.Drawing.Point(541, 702);
             this.BtnAdd.Name = "BtnAdd";
@@ -100,6 +103,7 @@ namespace Battleship
             // 
             // BtnCancel
             // 
+            this.BtnCancel.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnCancel.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnCancel.Location = new System.Drawing.Point(622, 702);
             this.BtnCancel.Name = "BtnCancel";
@@ -111,6 +115,7 @@ namespace Battleship
             // 
             // BtnReset
             // 
+            this.BtnReset.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Right)));
             this.BtnReset.FlatStyle = System.Windows.Forms.FlatStyle.Flat;
             this.BtnReset.Location = new System.Drawing.Point(966, 702);
             this.BtnReset.Name = "BtnReset";
@@ -131,6 +136,7 @@ namespace Battleship
             // 
             // LblResultAi
             // 
+            this.LblResultAi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LblResultAi.AutoSize = true;
             this.LblResultAi.Font = new System.Drawing.Font("Ink Free", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.LblResultAi.Location = new System.Drawing.Point(734, 88);
@@ -140,6 +146,7 @@ namespace Battleship
             // 
             // LblStepsAi
             // 
+            this.LblStepsAi.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LblStepsAi.AutoSize = true;
             this.LblStepsAi.Font = new System.Drawing.Font("Ink Free", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.LblStepsAi.Location = new System.Drawing.Point(708, 141);
@@ -158,6 +165,7 @@ namespace Battleship
             // 
             // pictureBox3
             // 
+            this.pictureBox3.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.pictureBox3.Image = global::Battleship.Properties.Resources.VS;
             this.pictureBox3.Location = new System.Drawing.Point(456, 23);
             this.pictureBox3.Name = "pictureBox3";
@@ -168,6 +176,7 @@ namespace Battleship
             // 
             // LblShipSunk
             // 
+            this.LblShipSunk.Anchor = System.Windows.Forms.AnchorStyles.Top;
             this.LblShipSunk.AutoSize = true;
             this.LblShipSunk.Font = new System.Drawing.Font("Ink Free", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.LblShipSunk.Location = new System.Drawing.Point(412, 163);
@@ -187,6 +196,7 @@ namespace Battleship
             // 
             // label2
             // 
+            this.label2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label2.AutoSize = true;
             this.label2.Font = new System.Drawing.Font("Ink Free", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label2.Location = new System.Drawing.Point(743, 127);
@@ -207,6 +217,7 @@ namespace Battleship
             // 
             // label4
             // 
+            this.label4.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Ink Free", 24F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.label4.Location = new System.Drawing.Point(743, 163);
@@ -226,6 +237,7 @@ namespace Battleship
             // 
             // LblAiShipLeft
             // 
+            this.LblAiShipLeft.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.LblAiShipLeft.AutoSize = true;
             this.LblAiShipLeft.Font = new System.Drawing.Font("Ink Free", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point);
             this.LblAiShipLeft.Location = new System.Drawing.Point(716, 182);
@@ -245,6 +257,7 @@ namespace Battleship
             // 
             // pictureBox2
             // 
+            this.pictureBox2.Anchor = ((System.Windows.Forms.AnchorStyles)((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Right)));
             this.pictureBox2.Image = global::Battleship.Properties.Resources.Yoshi;
             this.pictureBox2.Location = new System.Drawing.Point(851, 13);
             this.pictureBox2.Name = "pictureBox2";
@@ -280,8 +293,8 @@ namespace Battleship
             this.Controls.Add(this.BtnStart);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
-            this.MaximizeBox = false;
             this.Name = "Form1";
+            this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "-=Battleship=-";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox3)).EndInit();
