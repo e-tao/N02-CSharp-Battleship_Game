@@ -28,4 +28,4 @@ The project uses the following language, toolkit, IDE etc...
 - [git] - version control
 
 ## Screenshot
-![Application Screenshot](https://raw.githubusercontent.com/ethantao-repo/N02-PRJ-Battleship_Game/master/screenshot/N02-Project_ScreenShoot.png)
+![Application Screenshot](https://github.com/ethantao-repo/N02-PRJ-Battleship_Game/blob/master/screenshot/N02-Project_ScreenShoot.png?raw=true)
